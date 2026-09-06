@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Mardi Mercredi 인증</title>
+  <style>
+    /* 全局重置与设计标记 */
+    :root {
+      --ink: #111;
+      --panel: rgba(232, 232, 232, 0.9);
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    html, body {
+      min-height: 100%;
+      background: #fff;
+      font-family: Arial, "Noto Sans KR", "Malgun Gothic", sans-serif;
+      color: var(--ink);
+      -webkit-font-smoothing: antialiased;
+    }
+    /* 主容器：背景图片与遮罩 */
+    .page {
+      min-height: 100svh;
+      position: relative;
+      overflow: hidden;
+      background: #fff url('https://tos.lingkeai.vip/yonghu/2026.09/06/20260906181957_18d2b41364f24276ad91.png?imageMogr2/ignore-error/1/thumbnail/1800x1800%3E/quality/95/format/jpg/strip') center top / cover no-repeat;
+    }
+    /* 极淡遮罩，保留背景细节 */
+    .veil {
+      position: absolute;
+      inset: 0;
+      background: rgba(255, 255, 255, 0.03);
+      pointer-events: none;
+    }
+    /* 内容区：居中、响应式、文字层级 */
+    .content {
+      width: min(100%, 900px);
+      min-height: 100svh;
+      margin: 0 auto;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: clamp(100px, 22vh, 300px) 6vw 180px;
+      text-align: center;
+    }
+    /* 品牌大字 */
+    .brand {
+      margin: 0;
+      font-size: clamp(40px, 8.8vw, 86px);
+      font-weight: 500;
+      letter-spacing: -0.065em;
+      line-height: 0.98;
+      white-space: nowrap;
+      color: var(--ink);
+      text-shadow: 0 2px 4px rgba(255, 255, 255, 0.3);
+    }
+    /* 序列号卡片：磨砂玻璃质感 */
+    .serial {
+      width: min(84vw, 690px);
+      margin-top: clamp(76px, 10vw, 115px);
+      min-height: 74px;
+      border-radius: 999px;
+      background: var(--panel);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 14px 28px;
+      font-family: "Comic Sans MS", "Bradley Hand", cursive, "Noto Sans KR", sans-serif;
+      font-size: clamp(17px, 3.1vw, 29px);
+      letter-spacing: 0.02em;
+      box-shadow: 0 1px 5px rgba(0, 0, 0, 0.04) inset, 0 8px 20px rgba(0, 0, 0, 0.02);
+      backdrop-filter: blur(2px);
+      word-break: break-word;
+      text-align: center;
+      transition: box-shadow 0.2s;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+    /* 认证文字块 */
+    .cert {
+      margin-top: clamp(76px, 10vw, 108px);
+      width: min(82vw, 680px);
+      font-weight: 700;
+      font-size: clamp(21px, 3.5vw, 34px);
+      line-height: 1.3;
+      letter-spacing: -0.045em;
+      color: var(--ink);
+      text-shadow: 0 1px 3px rgba(255, 255, 255, 0.4);
+    }
+    .cert p {
+      margin: 0 0 45px;
+    }
+    .cert p:last-child {
+      margin-bottom: 0;
+    }
+    .en {
+      font-family: Arial, sans-serif;
+      letter-spacing: -0.04em;
+      font-weight: 600;
+    }
+    /* 极小提示：聚焦时显示（可访问性） */
+    .hint {
+      margin-top: 28px;
+      font-size: 12px;
+      opacity: 0;
+      transition: opacity 0.2s ease;
+      color: #222;
+      letter-spacing: 0.04em;
+      background: rgba(255,255,255,0.3);
+      padding: 4px 12px;
+      border-radius: 30px;
+      backdrop-filter: blur(2px);
+    }
+    .serial:focus-within + .cert + .hint {
+      opacity: 0.55;
+    }
+    /* 移动端优化 */
+    @media (max-width: 600px) {
+      .page {
+        background-size: auto 100%;
+        background-position: center top;
+      }
+      .content {
+        padding-top: clamp(95px, 23vh, 205px);
+        padding-bottom: 120px;
+      }
+      .brand {
+        font-size: clamp(37px, 10.8vw, 68px);
+      }
+      .serial {
+        margin-top: clamp(62px, 13vw, 92px);
+        min-height: 58px;
+        padding: 11px 18px;
+        font-size: clamp(15px, 4vw, 22px);
+      }
+      .cert {
+        margin-top: clamp(62px, 13vw, 92px);
+        font-size: clamp(19px, 5.2vw, 29px);
+      }
+      .cert p {
+        margin-bottom: 32px;
+      }
+    }
+    @media (max-width: 360px) {
+      .brand {
+        font-size: 36px;
+      }
+      .cert {
+        font-size: 18px;
+      }
+      .serial {
+        font-size: 14px;
+        padding: 10px 12px;
+        min-height: 50px;
+      }
+    }
+    /* 针对触摸设备优化可访问性 */
+    .serial:focus-visible {
+      outline: 2px solid #222;
+      outline-offset: 2px;
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <div class="veil" aria-hidden="true"></div>
+    <section class="content" aria-label="Mardi Mercredi 정품 인증">
+      <h1 class="brand">Mardi Mercredi</h1>
+      <!-- 序列号区域：tabindex 使其可获得焦点，便于显示提示 -->
+      <div class="serial" tabindex="0" aria-label="제품 인증 번호" role="text" aria-readonly="true">
+        2403-MardiMercredi-EX-07-0138435
+      </div>
+      <!-- 认证信息：双语 -->
+      <div class="cert">
+        <p>Mardi Mercredi에서 정식으로<br />생산 및 유통하는 제품임을 인증합니다.</p>
+        <p class="en">Mardi Mercredi certifies that<br />this genuine product is manufactured<br />and distributed officially.</p>
+      </div>
+      <!-- 极小提示：聚焦序列号时浮现 -->
+      <div class="hint" aria-hidden="true">Official product certification</div>
+    </section>
+  </main>
+</body>
+</html>
